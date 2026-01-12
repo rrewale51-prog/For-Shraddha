@@ -19,7 +19,7 @@
         Wishing you a day filled with love, laughter, and all your favorite things!
       </div>
 
-      <!-- Countdown Example -->
+      <!-- Countdown -->
       <div class="countdown">
         <span id="days">00</span> Days 
         <span id="hours">00</span> Hours 
@@ -37,30 +37,7 @@
     </div>
   </div>
 
-  <!-- Countdown Script -->
-  <script>
-    // Set your birthday date here
-    const birthdayDate = new Date("2026-01-15T00:00:00").getTime();
-
-    const countdown = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = birthdayDate - now;
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("days").innerText = days.toString().padStart(2,'0');
-      document.getElementById("hours").innerText = hours.toString().padStart(2,'0');
-      document.getElementById("minutes").innerText = minutes.toString().padStart(2,'0');
-      document.getElementById("seconds").innerText = seconds.toString().padStart(2,'0');
-
-      if(distance < 0){
-        clearInterval(countdown);
-        document.querySelector(".countdown").innerText = "🎉 Happy Birthday! 🎉";
-      }
-    }, 1000);
-  </script>
+  <!-- Link external script -->
+  <script src="script.js"></script>
 </body>
 </html>
