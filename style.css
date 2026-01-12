@@ -9,7 +9,7 @@
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
-  background: #fff0f5;
+  background: #fff0f5; /* soft pink background */
   color: #333;
 }
 
@@ -17,10 +17,11 @@ body {
 .main-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* vertical */
-  align-items: center;     /* horizontal */
+  justify-content: center; /* vertical center */
+  align-items: center;     /* horizontal center */
   min-height: 100vh;
   text-align: center;
+  padding: 20px;
 }
 
 /* Container */
@@ -35,14 +36,14 @@ body {
 .header h1 {
   font-size: 36px;
   margin-bottom: 20px;
-  color: #ff69b4;
+  color: #ff69b4; /* bright pink */
 }
 
 /* Birthday Message */
 .birthday-message {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #8b008b;
+  color: #8b008b; /* deep purple */
 }
 
 /* Countdown */
@@ -50,7 +51,7 @@ body {
   font-size: 20px;
   margin-bottom: 20px;
   font-weight: bold;
-  color: #ff4500;
+  color: #ff4500; /* orange-red */
 }
 
 /* Images */
@@ -79,7 +80,7 @@ button:hover {
   background-color: #ff1493;
 }
 
-/* Media Queries */
+/* Media Queries for smaller screens */
 @media (max-width: 768px) {
   .header h1 {
     font-size: 28px;
