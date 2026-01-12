@@ -13,7 +13,7 @@ function MessageCard({ isActive }) {
   const curtainHintRef = useRef(null);
   const messageContentRef = useRef(null);
 
-  const message = `[Recipient Name],
+  const message = `[Chakuli],
 
 Your personalized birthday message goes here.
 
@@ -23,7 +23,7 @@ share memories, and make this special day even more memorable.
 This template supports multiple lines and formatting,
 so feel free to customize it completely to fit your style.
 
-Happy Birthday! 🎉
+Happy Birthday Chakuli! 🎉
 
 — [Your Name]`;
 
