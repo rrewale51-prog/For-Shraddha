@@ -1,0 +1,105 @@
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background: #fff0f5;
+  color: #333;
+}
+
+/* Main wrapper - vertical & horizontal center */
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertical */
+  align-items: center;     /* horizontal */
+  min-height: 100vh;
+  text-align: center;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #ff69b4;
+}
+
+/* Birthday Message */
+.birthday-message {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #8b008b;
+}
+
+/* Countdown */
+.countdown {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #ff4500;
+}
+
+/* Images */
+.birthday-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+/* Button */
+button {
+  padding: 12px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff69b4;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff1493;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 28px;
+  }
+  .birthday-message {
+    font-size: 20px;
+  }
+  .countdown {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 24px;
+  }
+  .birthday-message {
+    font-size: 16px;
+  }
+  .countdown {
+    font-size: 14px;
+  }
+}
