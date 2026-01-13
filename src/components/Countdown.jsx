@@ -1,3 +1,4 @@
+const TEST_MODE = true;
 import { useEffect, useState } from "react";
 import "./Countdown.css";
 
