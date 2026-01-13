@@ -1,128 +1,79 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+import { useEffect, useState } from "react";
+import "./App.css";
+
+function App() {
+  // SET TARGET DATE (YYYY, MM - 1, DD)
+  const targetDate = new Date(2026, 0, 20); // Jan 20, 2026
+
+  const calculateTimeLeft = () => {
+    const now = new Date().getTime();
+    const difference = targetDate.getTime() - now;
+
+    if (difference <= 0) {
+      return {
+        days: "00",
+        hours: "00",
+        minutes: "00",
+        seconds: "00",
+      };
+    }
+
+    return {
+      days: String(
+        Math.floor(difference / (1000 * 60 * 60 * 24))
+      ).padStart(2, "0"),
+      hours: String(
+        Math.floor((difference / (1000 * 60 * 60)) % 24)
+      ).padStart(2, "0"),
+      minutes: String(
+        Math.floor((difference / 1000 / 60) % 60)
+      ).padStart(2, "0"),
+      seconds: String(
+        Math.floor((difference / 1000) % 60)
+      ).padStart(2, "0"),
+    };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="app">
+      <div className="card">
+        <h1 className="title">Birthday Countdown</h1>
+        <p className="subtitle">Counting every second…</p>
+
+        <div className="countdown">
+          <div className="box">
+            <div className="value">{timeLeft.days}</div>
+            <div className="label">DAYS</div>
+          </div>
+
+          <div className="box">
+            <div className="value">{timeLeft.hours}</div>
+            <div className="label">HOURS</div>
+          </div>
+
+          <div className="box">
+            <div className="value">{timeLeft.minutes}</div>
+            <div className="label">MINUTES</div>
+          </div>
+
+          <div className="box">
+            <div className="value">{timeLeft.seconds}</div>
+            <div className="label">SECONDS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-  min-height: 100vh;
-}
-
-/* MAIN WRAPPER */
-.app {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-
-/* CARD */
-.card {
-  width: 100%;
-  max-width: 420px; /* iPhone 15 safe width */
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 16px;
-  padding: 1.5rem;
-  text-align: center;
-}
-
-/* TEXT */
-.title {
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-}
-
-.subtitle {
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
-  opacity: 0.8;
-}
-
-/* COUNTDOWN */
-.countdown {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
-}
-
-.box {
-  background: white;
-  border-radius: 12px;
-  padding: 1rem 0;
-}
-
-.value {
-  font-size: 1.8rem;
-  font-weight: bold;
-}
-
-.label {
-  font-size: 0.75rem;
-  opacity: 0.6;
-}
-
-/* TABLET */
-@media (min-width: 768px) {
-  .card {
-    max-width: 600px;
-  }
-
-  .countdown {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .title {
-    font-size: 2.2rem;
-  }
-}
-
-/* DESKTOP */
-@media (min-width: 1024px) {
-  .card {
-    max-width: 900px;
-  }
-}
-.app {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #ffd6e8, #ffb6c1);
-}
-
-.card {
-  background: white;
-  padding: 30px 24px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 360px;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-
-  animation: fadeUp 0.8s ease-out forwards;
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.enter-button {
-  margin-top: 20px;
-  padding: 12px 18px;
-  border-radius: 12px;
-  border: none;
-  font-size: 16px;
-  background: #ff69b4;
-  color: white;
-  cursor: pointer;
-}
+export default App;
