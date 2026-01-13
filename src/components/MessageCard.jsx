@@ -13,7 +13,7 @@ function MessageCard({ isActive }) {
   const curtainHintRef = useRef(null);
   const messageContentRef = useRef(null);
 
-  const message = `[Chakuli],
+  const message = `To Chakuli / Kukuli / The One I always wanted to see "Happy",
 
 Your personalized birthday message goes here.
 
