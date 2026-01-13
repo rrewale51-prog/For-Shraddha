@@ -2,20 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
-    />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <title>Happy Birthday Divyanshi 🎂</title>
+
+    <!-- CRITICAL: Enables mobile responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Improves rendering on mobile browsers -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Optional but recommended -->
+    <meta name="description" content="Birthday Countdown Website" />
+
+    <title>Birthday Countdown</title>
+
+    <!-- Prevents unwanted zoom on input focus (iOS safe) -->
+    <style>
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+    </style>
   </head>
+
   <body>
+    <!-- React mounts here -->
     <div id="root"></div>
+
+    <!-- Vite entry -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
