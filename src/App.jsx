@@ -1,6 +1,43 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
+  // SET TARGET DATE (YYYY, MM - 1, DD)
+  const targetDate = new Date(2026, 1, 14); // example: Feb 14, 2026
+
+  const calculateTimeLeft = () => {
+    const now = new Date().getTime();
+    const difference = targetDate.getTime() - now;
+
+    if (difference <= 0) {
+      return {
+        days: "00",
+        hours: "00",
+        minutes: "00",
+        seconds: "00",
+      };
+    }
+
+    return {
+      days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, "0"),
+      hours: String(
+        Math.floor((difference / (1000 * 60 * 60)) % 24)
+      ).padStart(2, "0"),
+      minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(2, "0"),
+      seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, "0"),
+    };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="app">
       <div className="card">
@@ -9,22 +46,22 @@ function App() {
 
         <div className="countdown">
           <div className="box">
-            <div className="value">12</div>
+            <div className="value">{timeLeft.days}</div>
             <div className="label">DAYS</div>
           </div>
 
           <div className="box">
-            <div className="value">08</div>
+            <div className="value">{timeLeft.hours}</div>
             <div className="label">HOURS</div>
           </div>
 
           <div className="box">
-            <div className="value">45</div>
+            <div className="value">{timeLeft.minutes}</div>
             <div className="label">MINUTES</div>
           </div>
 
           <div className="box">
-            <div className="value">22</div>
+            <div className="value">{timeLeft.seconds}</div>
             <div className="label">SECONDS</div>
           </div>
         </div>
