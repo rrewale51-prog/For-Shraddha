@@ -55,11 +55,14 @@ function App() {
           </p>
 
           <button
-            className="enter-button"
-            onClick={() => alert("Here you will show curtains, photos, message")}
-          >
-            Enter Celebration 🎂
-          </button>
+  className="enter-button"
+  onClick={() => {
+    window.location.href = "/message.html";
+  }}
+>
+  Enter Celebration 🎂
+</button>
+
         </div>
       ) : (
         <div className="card">
