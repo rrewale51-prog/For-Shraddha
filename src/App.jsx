@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   // SET TARGET DATE (YYYY, MM - 1, DD)
-  const targetDate = new Date(2026, 0, 13); // example: Jan 1, 2026
+  const targetDate = new Date(2026, 0, 20); // example: Jan 1, 2026
 
   const calculateTimeLeft = () => {
     const now = new Date().getTime();
