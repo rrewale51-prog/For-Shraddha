@@ -1,182 +1,71 @@
-import { gsap } from "gsap";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
-import CelebrationPage from "./components/CelebrationPage";
-import Countdown from "./components/Countdown";
-import Effects from "./components/Effects";
-import Gallery from "./components/Gallery";
-import Hearts from "./components/Hearts";
-import MessageCard from "./components/MessageCard";
-import MusicPlayer from "./components/MusicPlayer";
-
-gsap.registerPlugin(ScrollToPlugin);
 
 function App() {
-  const [currentPage, setCurrentPage] = useState(1); // Start at 1 for Countdown page
+  // SET TARGET DATE (YYYY, MM - 1, DD)
+  const targetDate = new Date(2026, 1, 14); // example: Feb 14, 2026
 
-  // ⚠️ FOR TESTING: Comment out lines 18-21 to reset on every reload
-  // Check localStorage to persist birthday reached state
-  const [birthdayReached, setBirthdayReached] = useState(() => {
-    const saved = localStorage.getItem("birthdayReached");
-    return saved === "true";
-  });
+  const calculateTimeLeft = () => {
+    const now = new Date().getTime();
+    const difference = targetDate.getTime() - now;
 
-  // ✅ FOR TESTING: Uncomment this line to always show countdown on reload
-  // const [birthdayReached, setBirthdayReached] = useState(false);
+    if (difference <= 0) {
+      return {
+        days: "00",
+        hours: "00",
+        minutes: "00",
+        seconds: "00",
+      };
+    }
 
-  const [showEffects, setShowEffects] = useState(false);
-
-  const page1Ref = useRef(null); // Countdown page
-  const page2Ref = useRef(null); // Celebration Page
-  const page3Ref = useRef(null); // MessageCard
-  const page4Ref = useRef(null); // Gallery
-  const musicPlayerRef = useRef(null); // Music player control
-
-  const goToPage = (pageNumber) => {
-    const refs = { 1: page1Ref, 2: page2Ref, 3: page3Ref, 4: page4Ref };
-    const currentPageRef = refs[currentPage];
-    const nextPageRef = refs[pageNumber];
-
-    const isForward = pageNumber > currentPage;
-
-    // Animate out current page
-    gsap.to(currentPageRef.current, {
-      x: isForward ? "-100%" : "100%",
-      opacity: 0,
-      duration: 0.6,
-      ease: "power2.inOut",
-    });
-
-    // Prepare next page
-    gsap.set(nextPageRef.current, {
-      x: isForward ? "100%" : "-100%",
-      opacity: 0,
-      visibility: "visible",
-    });
-
-    // Animate in next page
-    gsap.to(nextPageRef.current, {
-      x: "0%",
-      opacity: 1,
-      duration: 0.6,
-      ease: "power2.inOut",
-      delay: 0.2,
-      onComplete: () => {
-        setCurrentPage(pageNumber);
-        // Reset current page position
-        gsap.set(currentPageRef.current, { x: "0%", visibility: "hidden" });
-
-        // Smooth scroll to top
-        gsap.to(window, { duration: 0.3, scrollTo: { y: 0 } });
-      },
-    });
+    return {
+      days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, "0"),
+      hours: String(
+        Math.floor((difference / (1000 * 60 * 60)) % 24)
+      ).padStart(2, "0"),
+      minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(2, "0"),
+      seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, "0"),
+    };
   };
 
-  const handleBirthdayReached = () => {
-    setBirthdayReached(true);
-    localStorage.setItem("birthdayReached", "true"); // Persist to localStorage
-    setShowEffects(true);
-    // Stop effects after some time
-    setTimeout(() => setShowEffects(false), 10000);
-  };
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="app">
-      <MusicPlayer ref={musicPlayerRef} />
-      <Hearts />
+      <div className="card">
+        <h1 className="title">Birthday Countdown</h1>
+        <p className="subtitle">Counting every second…</p>
 
-      {/* PAGE 1: Countdown Timer */}
-      <div
-        ref={page1Ref}
-        className={`page ${currentPage === 1 ? "active" : ""}`}
-        style={{ visibility: currentPage === 1 ? "visible" : "hidden" }}
-      >
-        <section className="hero">
-          <h1 id="heroTitle">
-            {birthdayReached ? (
-              <>
-                Happy Birthday <span className="highlight">[Name]</span> 🎂
-              </>
-            ) : (
-              <>
-                Counting down to <span className="highlight">[Name]'s</span>{" "}
-                special day 🎂
-              </>
-            )}
-          </h1>
-          <p>Your personalized message goes here 💗</p>
-        </section>
+        <div className="countdown">
+          <div className="box">
+            <div className="value">{timeLeft.days}</div>
+            <div className="label">DAYS</div>
+          </div>
 
-        <Countdown
-          onBirthdayReached={handleBirthdayReached}
-          birthdayReached={birthdayReached}
-        />
+          <div className="box">
+            <div className="value">{timeLeft.hours}</div>
+            <div className="label">HOURS</div>
+          </div>
 
-        <section className="teaser">
-          <h2 id="teaserHeading">
-            {birthdayReached
-              ? "💖 Ready for your surprise! 💖"
-              : "✨ A special celebration awaits you at midnight... ✨"}
-          </h2>
-          <p className="teaser-hint">Something magical is about to unfold 💫</p>
-        </section>
+          <div className="box">
+            <div className="value">{timeLeft.minutes}</div>
+            <div className="label">MINUTES</div>
+          </div>
 
-        <button
-          id="surpriseBtn"
-          className="celebrate-btn"
-          disabled={!birthdayReached}
-          onClick={() => goToPage(2)}
-        >
-          🎀 Let's Celebrate
-        </button>
+          <div className="box">
+            <div className="value">{timeLeft.seconds}</div>
+            <div className="label">SECONDS</div>
+          </div>
+        </div>
       </div>
-
-      {/* PAGE 2: Celebration/QNA Page */}
-      <div
-        ref={page2Ref}
-        className={`page ${currentPage === 2 ? "active" : ""}`}
-        style={{ visibility: currentPage === 2 ? "visible" : "hidden" }}
-      >
-        <CelebrationPage
-          onComplete={() => goToPage(3)}
-          musicPlayerRef={musicPlayerRef}
-        />
-      </div>
-
-      {/* PAGE 3: Message Card */}
-      <div
-        ref={page3Ref}
-        className={`page ${currentPage === 3 ? "active" : ""}`}
-        style={{ visibility: currentPage === 3 ? "visible" : "hidden" }}
-      >
-        <button className="back-btn" onClick={() => goToPage(2)}>
-          ← Back
-        </button>
-        <MessageCard isActive={currentPage === 3} />
-        <button className="page-nav-btn" onClick={() => goToPage(4)}>
-          📸 View Our Memories
-        </button>
-      </div>
-
-      {/* PAGE 4: Gallery */}
-      <div
-        ref={page4Ref}
-        className={`page ${currentPage === 4 ? "active" : ""}`}
-        style={{ visibility: currentPage === 4 ? "visible" : "hidden" }}
-      >
-        <button className="back-btn" onClick={() => goToPage(3)}>
-          ← Back
-        </button>
-        <Gallery isActive={currentPage === 4} />
-        <section className="final">
-          <h2 className="final-message">💖 Forever Yours — [Your Name] 💖</h2>
-          <p className="final-subtitle">Your personalized closing message ✨</p>
-        </section>
-      </div>
-
-      {/* Effects */}
-      {showEffects && <Effects />}
     </div>
   );
 }
