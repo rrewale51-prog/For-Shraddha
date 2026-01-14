@@ -1,75 +1,49 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 
-function App() {
-  // SET TARGET DATE (YYYY, MM - 1, DD)
-  const targetDate = new Date(2026, 1, 14); // example: Feb 14, 2026
+export default function App() {
+  const targetDate = new Date("2026-02-14T00:00:00"); // CHANGE DATE HERE
 
-  const calculateTimeLeft = () => {
-    const now = new Date().getTime();
-    const difference = targetDate.getTime() - now;
-
-    if (difference <= 0) {
-      return {
-        days: "00",
-        hours: "00",
-        minutes: "00",
-        seconds: "00",
-      };
-    }
-
-    return {
-      days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, "0"),
-      hours: String(
-        Math.floor((difference / (1000 * 60 * 60)) % 24)
-      ).padStart(2, "0"),
-      minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(2, "0"),
-      seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, "0"),
-    };
-  };
-
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState({});
 
   useEffect(() => {
     const timer = setInterval(() => {
-      console.log("tick");
-      setTimeLeft(calculateTimeLeft());
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        clearInterval(timer);
+        setTimeLeft({});
+        return;
+      }
+
+      setTimeLeft({
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((diff / (1000 * 60)) % 60),
+        seconds: Math.floor((diff / 1000) % 60),
+      });
     }, 1000);
 
     return () => clearInterval(timer);
   }, []);
 
-
   return (
-    <div className="app">
-      <div className="card">
-        <h1 className="title">Birthday Countdown</h1>
-        <p className="subtitle">Counting every second…</p>
+    <div className="page">
+      <h1>For Shraddha ❤️</h1>
+      <p className="subtitle">Counting every second...</p>
 
-        <div className="countdown">
-          <div className="box">
-            <div className="value">{timeLeft.days}</div>
-            <div className="label">DAYS</div>
-          </div>
-
-          <div className="box">
-            <div className="value">{timeLeft.hours}</div>
-            <div className="label">HOURS</div>
-          </div>
-
-          <div className="box">
-            <div className="value">{timeLeft.minutes}</div>
-            <div className="label">MINUTES</div>
-          </div>
-
-          <div className="box">
-            <div className="value">{timeLeft.seconds}</div>
-            <div className="label">SECONDS</div>
-          </div>
-        </div>
+      <div className="countdown">
+        {Object.keys(timeLeft).length > 0 ? (
+          Object.entries(timeLeft).map(([label, value]) => (
+            <div className="box" key={label}>
+              <div className="number">{value}</div>
+              <div className="label">{label}</div>
+            </div>
+          ))
+        ) : (
+          <h2>🎉 The Day Is Here 🎉</h2>
+        )}
       </div>
     </div>
   );
 }
-
-export default App;
