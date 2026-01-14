@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 
 export default function App() {
-  const targetDate = new Date("2026-01-20T00:00:00"); // CHANGE DATE HERE
+  const targetDate = new Date("2026-02-14T00:00:00"); // CHANGE DATE HERE
 
   const [timeLeft, setTimeLeft] = useState({});
   const [finished, setFinished] = useState(false);
+  const [showText, setShowText] = useState(false);
 
   useEffect(() => {
-    // Load confetti script from CDN
+    // Load confetti script
     const script = document.createElement("script");
     script.src =
       "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
@@ -23,6 +24,7 @@ export default function App() {
         setFinished(true);
         setTimeLeft({});
         setTimeout(() => fireConfetti(), 300);
+        setTimeout(() => setShowText(true), 800);
         return;
       }
 
@@ -45,21 +47,19 @@ export default function App() {
 
     (function frame() {
       window.confetti({
-        particleCount: 5,
+        particleCount: 6,
         angle: 60,
-        spread: 70,
+        spread: 80,
         origin: { x: 0 },
       });
       window.confetti({
-        particleCount: 5,
+        particleCount: 6,
         angle: 120,
-        spread: 70,
+        spread: 80,
         origin: { x: 1 },
       });
 
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
-      }
+      if (Date.now() < end) requestAnimationFrame(frame);
     })();
   };
 
@@ -81,8 +81,24 @@ export default function App() {
         </>
       ) : (
         <>
-          <h2>🎉 It’s Time! 🎉</h2>
-          <p className="subtitle">This moment was worth the wait ❤️</p>
+          <h2 className="reveal-title">🎉 It’s Finally Here 🎉</h2>
+
+          {showText && (
+            <div className="reveal-text">
+              <p style={{ animationDelay: "0.3s" }}>
+                Today is not just a day…
+              </p>
+              <p style={{ animationDelay: "1s" }}>
+                It’s a reminder of how special you are.
+              </p>
+              <p style={{ animationDelay: "1.7s" }}>
+                Every moment waiting for this was worth it.
+              </p>
+              <p style={{ animationDelay: "2.4s" }}>
+                Happy Day, Shraddha ❤️
+              </p>
+            </div>
+          )}
         </>
       )}
     </div>
