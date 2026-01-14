@@ -80,3 +80,30 @@ h1 {
     font-size: 2.8rem;
   }
 }
+.reveal-title {
+  margin-top: 20px;
+  font-size: 2rem;
+  animation: fadeUp 1s ease forwards;
+}
+
+.reveal-text {
+  margin-top: 20px;
+}
+
+.reveal-text p {
+  opacity: 0;
+  font-size: 1.1rem;
+  margin: 10px 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
