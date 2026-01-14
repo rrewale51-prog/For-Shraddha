@@ -32,11 +32,13 @@ function App() {
 
   useEffect(() => {
     const timer = setInterval(() => {
+      console.log("tick");
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
     return () => clearInterval(timer);
   }, []);
+
 
   return (
     <div className="app">
