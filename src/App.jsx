@@ -4,8 +4,8 @@ export default function App() {
   const targetDate = new Date("2026-01-20T00:00:00"); // CHANGE DATE HERE
 
   const [timeLeft, setTimeLeft] = useState({});
-  const [finished, setFinished] = useState(true);
-  const [showText, setShowText] = useState(true);
+  const [finished, setFinished] = useState(false);
+  const [showText, setShowText] = useState(false);
   const [dark, setDark] = useState(
     localStorage.getItem("darkMode") === "true"
   );
