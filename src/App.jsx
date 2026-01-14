@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
 
 export default function App() {
-  const targetDate = new Date("2026-02-14T00:00:00"); // CHANGE DATE HERE
+  const targetDate = new Date("2026-01-20T00:00:00"); // CHANGE DATE HERE
 
   const [timeLeft, setTimeLeft] = useState({});
   const [finished, setFinished] = useState(false);
   const [showText, setShowText] = useState(false);
+  const [dark, setDark] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
 
+  // Dark mode handling
   useEffect(() => {
-    // Load confetti script
+    document.body.className = dark ? "dark" : "";
+    localStorage.setItem("darkMode", dark);
+  }, [dark]);
+
+  // Countdown + confetti logic
+  useEffect(() => {
+    // Load confetti from CDN
     const script = document.createElement("script");
     script.src =
       "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
@@ -42,8 +52,7 @@ export default function App() {
   const fireConfetti = () => {
     if (!window.confetti) return;
 
-    const duration = 5000;
-    const end = Date.now() + duration;
+    const end = Date.now() + 5000;
 
     (function frame() {
       window.confetti({
@@ -65,11 +74,16 @@ export default function App() {
 
   return (
     <div className="page">
+      <button className="toggle" onClick={() => setDark(!dark)}>
+        {dark ? "☀ Light Mode" : "🌙 Dark Mode"}
+      </button>
+
       <h1>For Shraddha ❤️</h1>
 
       {!finished ? (
         <>
           <p className="subtitle">Counting every second...</p>
+
           <div className="countdown">
             {Object.entries(timeLeft).map(([label, value]) => (
               <div className="box" key={label}>
