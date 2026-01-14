@@ -5,7 +5,7 @@ export default function App() {
 
   const [timeLeft, setTimeLeft] = useState({});
   const [finished, setFinished] = useState(true);
-  const [showText, setShowText] = useState(false);
+  const [showText, setShowText] = useState(true);
   const [dark, setDark] = useState(
     localStorage.getItem("darkMode") === "true"
   );
