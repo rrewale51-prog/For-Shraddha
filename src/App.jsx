@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function App() {
-  const targetDate = new Date("2026-01-20T00:00:00"); // CHANGE DATE HERE
+  const targetDate = new Date("2026-01-18T00:00:00"); // CHANGE DATE HERE
 
   const [timeLeft, setTimeLeft] = useState({});
   const [finished, setFinished] = useState(true);
